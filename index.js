@@ -1,10 +1,21 @@
 const express = require('express')
-const path = require('path')
 const PORT = process.env.PORT || 5000
+const cors = require('cors');
 
-express()
-  .use(express.static(path.join(__dirname, 'public')))
-  .set('views', path.join(__dirname, 'views'))
-  .set('view engine', 'ejs')
-  .get('/', (req, res) => res.render('pages/index'))
-  .listen(PORT, () => console.log(`Listening on ${ PORT }`))
+const app = express();
+
+require('dotenv').config();
+
+app.use(cors());
+
+app.use(express.json({ limit: '2mb' }));
+
+const router = require('./routes/index');
+
+app.use(router);
+
+app.listen(PORT, () => {
+  console.log(`Port is listening on ${PORT}`); // eslint-disable-line
+});
+
+module.exports = app;
