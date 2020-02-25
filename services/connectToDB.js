@@ -1,13 +1,13 @@
-const mysql = require('mysql');
+const mongoose = require('mongoose');
 
-const conn = mysql.createConnection({
-  host: process.env.DB_HOST,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
-  multipleStatements: true,
+const conn = mongoose.connect(process.env.mongoDB, error => {
+  if (!error) {
+    console.log('Success');
+  } else {
+    console.log('Error connecting to Database!');
+  }
 });
 
 module.exports = {
-  conn,
+  conn
 };
