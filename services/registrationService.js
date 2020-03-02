@@ -3,7 +3,8 @@ class RegistrationService {
     this.conn = conn;
   }
 
-  checkIfUserNameNumLatinLetters(input) { // eslint-disable-line
+  checkIfUserNameNumLatinLetters(input) {
+    // eslint-disable-line
     const user = /^[A-Za-z0-9]\w{0,}$/;
 
     if (input && user.test(input)) {
@@ -12,7 +13,8 @@ class RegistrationService {
     return false;
   }
 
-  checkIfPasswordNumLatinLetter(input) { // eslint-disable-line
+  checkIfPasswordNumLatinLetter(input) {
+    // eslint-disable-line
     const passw = /^[A-Za-z0-9]\w{7,}$/;
 
     if (input && passw.test(input)) {
@@ -22,13 +24,25 @@ class RegistrationService {
   }
 
   containsUser(item) {
-    return new Promise((resolve) => {
-      const query = 'SELECT * FROM users WHERE username = ?;';
+    console.log('yay INcontains')
+    console.log(this.conn)
+    return new Promise(
+      resolve => {
+        // const query = 'SELECT * FROM users WHERE username = ?;';
+        this.conn.getDB().collection(users).find({ id: item }).toArray((err, document) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(document);
+            resolve.json(document);
+          }
+        });
+      }
 
-      this.conn.query(query, [item.username], (err, row) => {
-        err ? resolve(err) : resolve(row);
-      });
-    });
+      // this.conn.query2(query, [item.username], (err, row) => {
+      //   err ? resolve(err) : resolve(row);
+      // });
+    );
   }
 
   insertUser(item) {
@@ -44,7 +58,10 @@ class RegistrationService {
   async createUser(item) {
     const userData = await this.containsUser(item);
     return new Promise((resolve, reject) => {
-      if (!this.checkIfUserNameNumLatinLetters(item.username) || !this.checkIfPasswordNumLatinLetter(item.password)) {
+      if (
+        !this.checkIfUserNameNumLatinLetters(item.username) ||
+        !this.checkIfPasswordNumLatinLetter(item.password)
+      ) {
         reject(new Error(400));
       } else if (item.password !== item.confirmPsw) {
         reject(new Error(400));

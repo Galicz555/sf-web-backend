@@ -8,7 +8,7 @@ class LoginService {
 
   async authorizeUser(input) {
     const userInfo = await this.registrationService.containsUser(input);
-
+    console.log('yay contains')
     return new Promise((resolve, reject) => {
       if (userInfo.length) {
         if (userInfo[0].username === input.username && userInfo[0].password === input.password) {
