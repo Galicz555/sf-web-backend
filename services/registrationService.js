@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const UserModel = mongoose.model('users');
-const counters = mongoose.model('counters');
 
 class RegistrationService {
   constructor(conn) {

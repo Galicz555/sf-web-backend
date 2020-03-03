@@ -1,14 +1,18 @@
 const mongoose = require('mongoose');
 
 let heroSchema = new mongoose.Schema({
-  id: {
-    type: Number,
+  charname: {
+    type: String,
     required: 'Required'
   },
-  name: {
+  class: {
     type: String,
+    required: 'Required'
+  },
+  level: {
+    type: Number,
     required: 'Required'
   }
 });
 
-mongoose.model('hero', heroSchema)
+mongoose.model('heroes', heroSchema)

@@ -9,8 +9,7 @@ const conn = mongoose.connect(process.env.mongoDB, { useNewUrlParser: true, useU
 });
 
 const users = require('./../models/users.model');
-const hero = require('../models/hero.model');
-const counters = require('../models/counter.model');
+const heroes = require('../models/hero.model');
 module.exports = {
   conn
 };

@@ -12,8 +12,8 @@ class LoginService {
       if (userInfo.length) {
         if (userInfo[0].username === input.username && userInfo[0].password === input.password) {
           resolve({
-            accessToken: this.generateAccessToken({ userId: userInfo[0].id }),
-            refreshToken: this.generateRefreshToken({ userId: userInfo[0].id }),
+            accessToken: this.generateAccessToken({ userId: userInfo[0].username }),
+            refreshToken: this.generateRefreshToken({ userId: userInfo[0].username }),
           });
         } else {
           reject(new Error(false));

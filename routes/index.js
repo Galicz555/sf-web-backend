@@ -28,7 +28,13 @@ router.get('/helloworld', helloWorldController.helloWorldController);
 
 router.post('/login', loginController.login);
 
-router.get('/heroes', auth.authenticateToken, heroController.getHeroes);
+router.get('/hero/:heroName',
+//  auth.authenticateToken,
+  heroController.getHeroByName); //eslint-disable-line
+
+router.get('/heroes', auth.authenticateToken,
+// heroController.getHeroes
+);
 
 router.post('/register', registrationController.register);
 
