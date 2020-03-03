@@ -1,3 +1,7 @@
+const mongoose = require('mongoose');
+const UserModel = mongoose.model('users');
+const counters = mongoose.model('counters');
+
 class RegistrationService {
   constructor(conn) {
     this.conn = conn;
@@ -24,34 +28,37 @@ class RegistrationService {
   }
 
   containsUser(item) {
-    console.log('yay INcontains')
-    console.log(this.conn)
-    return new Promise(
-      resolve => {
-        // const query = 'SELECT * FROM users WHERE username = ?;';
-        this.conn.getDB().collection(users).find({ id: item }).toArray((err, document) => {
-          if (err) {
-            console.log(err);
-          } else {
-            console.log(document);
-            resolve.json(document);
-          }
-        });
-      }
-
-      // this.conn.query2(query, [item.username], (err, row) => {
-      //   err ? resolve(err) : resolve(row);
-      // });
-    );
+    return new Promise(resolve => {
+      // const query = 'SELECT * FROM users WHERE username = ?;';
+      UserModel.find({ username: item.username }, (err, docs) => {
+        if (err) {
+          console.log(err);
+        } else {
+          resolve(docs);
+        }
+      });
+    });
   }
 
   insertUser(item) {
     return new Promise((resolve, reject) => {
-      const query = 'INSERT INTO users (username, password) VALUES (?, ?);';
-
-      this.conn.query(query, [item.username, item.password], (err, row) => {
-        err ? reject(err) : resolve(row.insertId);
+      let newUser = new UserModel({
+        username : item.name,
+        email : item.email,
+        password : item.password,
+        confirmPsw : item.confirmPsw,
+        phoneNumber : item.phoneNumber,
+        dateOfBirth : item.dateOfBirth,
+        role : 'user'
       });
+
+      newUser.save().then(result => {console.log(result)}).catch(err => console.log(err));
+      resolve(newUser.id)
+      // const query = 'INSERT INTO users (username, password) VALUES (?, ?);';
+
+      // this.conn.query(query, [item.username, item.password], (err, row) => {
+      //   err ? reject(err) : resolve(row.insertId);
+      // });
     });
   }
 
@@ -59,7 +66,7 @@ class RegistrationService {
     const userData = await this.containsUser(item);
     return new Promise((resolve, reject) => {
       if (
-        !this.checkIfUserNameNumLatinLetters(item.username) ||
+        !this.checkIfUserNameNumLatinLetters(item.name) ||
         !this.checkIfPasswordNumLatinLetter(item.password)
       ) {
         reject(new Error(400));
