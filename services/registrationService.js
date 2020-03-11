@@ -42,10 +42,10 @@ class RegistrationService {
   insertUser(item) {
     return new Promise((resolve, reject) => {
       let newUser = new UserModel({
-        username : item.name,
+        username : item.username,
         email : item.email,
         password : item.password,
-        confirmPsw : item.confirmPsw,
+        // confirmPsw : item.confirmPsw,
         phoneNumber : item.phoneNumber,
         dateOfBirth : item.dateOfBirth,
         role : 'user'
@@ -65,7 +65,7 @@ class RegistrationService {
     const userData = await this.containsUser(item);
     return new Promise((resolve, reject) => {
       if (
-        !this.checkIfUserNameNumLatinLetters(item.name) ||
+        !this.checkIfUserNameNumLatinLetters(item.username) ||
         !this.checkIfPasswordNumLatinLetter(item.password)
       ) {
         reject(new Error(400));

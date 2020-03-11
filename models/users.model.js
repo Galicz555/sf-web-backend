@@ -14,11 +14,11 @@ let usersSchema = new mongoose.Schema({
     required: 'Required'
   },
   phoneNumber:{
-    type: Number,
+    type: String,
     required: 'Required'
   },
   dateOfBirth:{
-    type: Date,
+    type: String,
     required: 'Required'
   },
   role: {
