@@ -11,6 +11,7 @@ const RegistrationService = require('../services/registrationService');
 const LoginController = require('../controllers/loginController');
 const LoginService = require('../services/loginService');
 const Authentication = require('../services/authenticationService');
+const IdService = require('../services/idService');
 
 let useddb = conn;
 let accTokSec = process.env.ACCESS_TOKEN_SECRET;
@@ -23,6 +24,8 @@ const loginService = new LoginService(useddb, registrationService, auth.generate
 const loginController = new LoginController(loginService);
 const heroService = new HeroService(useddb);
 const heroController = new HeroController(heroService, Authentication.getIdFromToken);
+const idService = new IdService(Authentication.getIdFromToken)
+
 
 router.get('/helloworld', helloWorldController.helloWorldController);
 
@@ -39,6 +42,8 @@ router.get('/heroes', auth.authenticateToken,
 router.post('/register', registrationController.register);
 
 router.post('/getToken', auth.RefreshedToken);
+
+router.post('/getId', auth.authenticateToken, idService.retrieveUserById)
 
 
 module.exports = router;

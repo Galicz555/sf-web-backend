@@ -32,7 +32,6 @@ class HeroService {
         if (err) {
           console.log(err);
         } else {
-          console.log(docs);
           resolve(docs);
         }
       });
