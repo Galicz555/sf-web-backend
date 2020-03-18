@@ -11,6 +11,7 @@ const RegistrationService = require('../services/registrationService');
 const LoginController = require('../controllers/loginController');
 const LoginService = require('../services/loginService');
 const Authentication = require('../services/authenticationService');
+const IdController = require('../controllers/idController');
 const IdService = require('../services/idService');
 
 let useddb = conn;
@@ -24,16 +25,17 @@ const loginService = new LoginService(useddb, registrationService, auth.generate
 const loginController = new LoginController(loginService);
 const heroService = new HeroService(useddb);
 const heroController = new HeroController(heroService, Authentication.getIdFromToken);
-const idService = new IdService(Authentication.getIdFromToken)
+const idService = new IdService(useddb);
+const idController = new IdController(idService, Authentication.getIdFromToken);
 
 
 router.get('/helloworld', helloWorldController.helloWorldController);
 
 router.post('/login', loginController.login);
 
-router.get('/hero/:heroName',
-//  auth.authenticateToken,
-  heroController.getHeroByName); //eslint-disable-line
+router.get('/hero/:id', auth.authenticateToken, heroController.getHeroById); //eslint-disable-line
+
+router.put('/hero/:id', auth.authenticateToken, heroController.updateHeroById);
 
 router.get('/heroes', auth.authenticateToken,
 // heroController.getHeroes
@@ -43,7 +45,7 @@ router.post('/register', registrationController.register);
 
 router.post('/getToken', auth.RefreshedToken);
 
-router.post('/getId', auth.authenticateToken, idService.retrieveUserById)
+router.get('/getId', auth.authenticateToken, idController.getUserName);
 
 
 module.exports = router;

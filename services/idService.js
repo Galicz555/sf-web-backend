@@ -1,18 +1,19 @@
 const mongoose = require('mongoose');
 const UserModel = mongoose.model('users');
 class idService {
-  constructor(getIdFromToken) {
-    this.getIdFromToken = getIdFromToken;
+
+  constructor() {
+    this.retrieveUserById = this.retrieveUserById.bind(this);
   }
-  retrieveUserById() {
+
+  retrieveUserById(username) {
     return new Promise((resolve, reject) => {
       // const query = 'SELECT * FROM users WHERE username = ?;';
-      UserModel.find({ _id: this.getIdFromToken }, (err, docs) => {
+      UserModel.find({ username: username }, (err, docs) => {
         if (err) {
           console.log(err);
         } else {
-          console.log(docs);
-          resolve(docs);
+          resolve(docs[0]._id);
         }
       });
     });

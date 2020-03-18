@@ -51,7 +51,8 @@ class RegistrationService {
         role : 'user'
       });
 
-      newUser.save().then(result => {console.log(result)}).catch(err => console.log(err));
+      newUser.save()
+      // .then(result => {console.log(result)}).catch(err => console.log(err));
       resolve(newUser.id)
       // const query = 'INSERT INTO users (username, password) VALUES (?, ?);';
 

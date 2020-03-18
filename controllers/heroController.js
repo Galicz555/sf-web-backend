@@ -3,7 +3,8 @@ class HeroController {
     this.heroService = heroService;
     // this.getHeroes = this.getHeroes.bind(this);
     // this.postHero = this.postHero.bind(this);
-    this.getHeroByName = this.getHeroByName.bind(this);
+    this.getHeroById = this.getHeroById.bind(this);
+    this.updateHeroById = this.updateHeroById.bind(this);
     this.getIdFromToken = getIdFromToken;
   }
 
@@ -30,10 +31,10 @@ class HeroController {
   //   }
   // }
 
-  getHeroByName(req, res) {
-    const heroName = req.params.heroName;
-    if (heroName) {
-      this.heroService.retrieveHeroByName(heroName).then(
+  getHeroById(req, res) {
+    const heroId = req.params.id;
+    if (heroId) {
+      this.heroService.retrieveHeroById(heroId).then(
         (response) => {
           res.status(200).json(response);
         },
@@ -41,7 +42,23 @@ class HeroController {
           res.status(400).json({ Error: error.message });
         });
     } else {
-      res.status(400).json({ Error: 'Please provide a Hero name' });
+      res.status(400).json({ Error: 'Please provide a Hero id' });
+    }
+  }
+
+  updateHeroById(req, res) {
+    const char = req.body;
+    // const heroId = req.params.id;
+    if (char) {
+      this.heroService.updateHeroById(char).then(
+        (response) => {
+          res.status(200).json(response);
+        },
+        (error) => {
+          res.status(400).json({ Error: error.message });
+        });
+    } else {
+      res.status(400).json({ Error: 'Please provide a character id' });
     }
   }
 }

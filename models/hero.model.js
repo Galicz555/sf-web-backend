@@ -1,7 +1,15 @@
 const mongoose = require('mongoose');
 
 let heroSchema = new mongoose.Schema({
+  id: {
+    type: Number,
+    required: 'Required'
+  },
   charname: {
+    type: String,
+    required: 'Required'
+  },
+  sfSociety: {
     type: String,
     required: 'Required'
   },
@@ -10,6 +18,18 @@ let heroSchema = new mongoose.Schema({
     required: 'Required'
   },
   level: {
+    type: Number,
+    required: 'Required'
+  },
+  race: {
+    type: String,
+    required: 'Required'
+  },
+  theme: {
+    type: String,
+    required: 'Required'
+  },
+  speed: {
     type: Number,
     required: 'Required'
   }

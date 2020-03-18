@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-const accTokExp = '10m';
+const accTokExp = '60m';
 const refTokExp = '1d';
 
 class AuthenticationService {
@@ -51,7 +51,7 @@ class AuthenticationService {
   static getIdFromToken(req) {
     const authHeader = req.headers.authorization;
     const token = authHeader.split(' ')[1];
-    return jwt.decode(token).username;
+    return jwt.decode(token).userId;
   }
 }
 
