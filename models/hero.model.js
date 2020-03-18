@@ -25,7 +25,27 @@ let heroSchema = new mongoose.Schema({
     type: String,
     required: 'Required'
   },
+  gender: {
+    type: String,
+    required: 'Required'
+  },
   theme: {
+    type: String,
+    required: 'Required'
+  },
+  homeWorld: {
+    type: String,
+    required: 'Required'
+  },
+  aligment: {
+    type: String,
+    required: 'Required'
+  },
+  diety: {
+    type: String,
+    required: 'Required'
+  },
+  player: {
     type: String,
     required: 'Required'
   },

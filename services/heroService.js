@@ -36,8 +36,23 @@ class HeroService {
           if (char.race) {
             docs.race = char.race;
           }
+          if (char.gender) {
+            docs.gender = char.gender;
+          }
           if (char.theme) {
             docs.theme = char.theme;
+          }
+          if (char.homeWorld) {
+            docs.homeWorld = char.homeWorld;
+          }
+          if (char.aligment) {
+            docs.aligment = char.aligment;
+          }
+          if (char.diety) {
+            docs.diety = char.diety;
+          }
+          if (char.player) {
+            docs.player = char.player;
           }
           docs.save((err, updatedObject) => {
             if (err) {
