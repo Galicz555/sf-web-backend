@@ -1,13 +1,9 @@
 const mongoose = require('mongoose');
 
 let heroSchema = new mongoose.Schema({
-  id: {
-    type: Number,
-    required: 'Required'
-  },
-  _id: {
+  userId: {
     type: String,
-    required: 'Optional'
+    required: 'Required'
   },
   charname: {
     type: String,

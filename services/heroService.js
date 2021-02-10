@@ -1,26 +1,24 @@
 const mongoose = require('mongoose');
 const hero = mongoose.model('heroes');
+
 class HeroService {
   constructor(conn, idleActionService) {
     this.conn = conn;
     this.idleActionService = idleActionService;
   }
 
-  retrieveHeroById(heroId) {
+  retrieveHeroesByUserId(userId) {
     return new Promise((resolve, reject) => {
-      hero.find({ _id: heroId }, (err, docs) => {
+      hero.find({ userId: userId }, (err, heroes) => {
         if (err) console.log(err)
-        else {
-          if (heroId) docs._id = heroId;
-          resolve(docs)
-        }
+        else resolve(heroes)
       });
     });
   }
 
   updateHeroById(char) {
     return new Promise((resolve, reject) => {
-      hero.findOne({ id: char.id }, (err, docs) => {
+      hero.findOne({ userId: char.userId }, (err, docs) => {
         if (err) console.log(err);
         else {
           if (char.charname) docs.charname = char.charname;
@@ -35,10 +33,7 @@ class HeroService {
           if (char.player) docs.player = char.player;
           docs.save((err, updatedObject) => {
             if (err) console.log(err);
-            else {
-              console.log(updatedObject)
-              resolve(updatedObject);
-            }
+            else resolve(updatedObject);
           });
         }
       });

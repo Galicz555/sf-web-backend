@@ -33,9 +33,9 @@ router.get('/helloworld', helloWorldController.helloWorldController);
 
 router.post('/login', loginController.login);
 
-router.get('/hero/:id', auth.authenticateToken, heroController.getHeroById); //eslint-disable-line
+router.get('/heroes/:id', auth.authenticateToken, heroController.retrieveHeroesByUserId); //eslint-disable-line
 
-router.put('/hero/:id', auth.authenticateToken, heroController.updateHeroById);
+router.put('/hero', auth.authenticateToken, heroController.updateHeroById);
 
 router.get('/heroes', auth.authenticateToken,
 // heroController.getHeroes

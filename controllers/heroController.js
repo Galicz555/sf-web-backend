@@ -3,7 +3,7 @@ class HeroController {
     this.heroService = heroService;
     // this.getHeroes = this.getHeroes.bind(this);
     // this.postHero = this.postHero.bind(this);
-    this.getHeroById = this.getHeroById.bind(this);
+    this.retrieveHeroesByUserId = this.retrieveHeroesByUserId.bind(this);
     this.updateHeroById = this.updateHeroById.bind(this);
     this.getIdFromToken = getIdFromToken;
   }
@@ -31,10 +31,10 @@ class HeroController {
   //   }
   // }
 
-  getHeroById(req, res) {
+  retrieveHeroesByUserId(req, res) {
     if (req.params && req.params.id) {
-      const heroId = req.params.id;
-      this.heroService.retrieveHeroById(heroId).then(
+      const userId = req.params.id;
+      this.heroService.retrieveHeroesByUserId(userId).then(
         (response) => res.status(200).json(response),
         (error) => res.status(400).json({ Error: error.message }));
     } else res.status(400).json({ Error: 'Please provide a Hero id' })
