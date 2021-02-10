@@ -5,6 +5,10 @@ let heroSchema = new mongoose.Schema({
     type: Number,
     required: 'Required'
   },
+  _id: {
+    type: String,
+    required: 'Optional'
+  },
   charname: {
     type: String,
     required: 'Required'
