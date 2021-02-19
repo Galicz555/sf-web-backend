@@ -1,5 +1,3 @@
-const qs = require('qs');
-
 class SpellController {
   constructor(spellService, getIdFromToken) {
 		this.spellService = spellService;
@@ -7,6 +5,7 @@ class SpellController {
     this.inTransformer = this.inTransformer.bind(this);
     this.constructObject = this.constructObject.bind(this);
     this.outTransformer = this.outTransformer.bind(this);
+    this.falseToNo = this.falseToNo.bind(this);
     this.getIdFromToken = getIdFromToken;
     this.mappedSpell = {};
   }
@@ -20,27 +19,31 @@ class SpellController {
       school, components, damage
     } = spell;
     this.mappedSpell = {
-      name: name,
-      schoolName: school.name,
-      desc: desc.join(', '),
-      component: components.join(', '),
-      higherLevel: higher_level.join(', '),
-      range: range,
-      areaOfEffect: `${area_of_effect.type} ${area_of_effect.size}`,
-      material: material,
-      ritual: ritual.toString(),
-      duration: duration,
-      concentration: concentration.toString(),
-      castingTime: casting_time,
-      level: level.toString(),
-      damageType: damage.damage_type.name,
-      damageAtSlotLevel: Object.entries(damage.damage_at_slot_level)
+      Név: name,
+      Iskola: school.name,
+      Leírás: desc.join(', '),
+      Magasabb_szinten: higher_level.join(', '),
+      Távolság: range,
+      Területi_hatása: `${area_of_effect.type} ${area_of_effect.size}`,
+      Varázslat_időtartama: duration,
+      Összetevők: components.join(', '),
+      Alapanyagok: material,
+      Rituális: this.falseToNo(ritual.toString()),
+      Koncentrációs: this.falseToNo(concentration.toString()),
+      Varázslási_idő: casting_time,
+      Szint: level.toString(),
+      Sebzés_típus: damage.damage_type.name,
+      Sebzések_magasabb_varázslat_slotból: Object.entries(damage.damage_at_slot_level)
         .map(([key, value]) => {
           return `LvL${key}: ${value}`
         }).join(', '),
-      dc: `${dc.dc_type.name} ${dc.dc_success}`,
+      Mentő: `${dc.dc_type.name} ${dc.dc_success}`,
     }
     return this.mappedSpell
+  }
+
+  falseToNo = (string) => {
+    return string === 'false' ? 'No' : string;
   }
 
   constructObject = arr => {

@@ -33,21 +33,15 @@ const idService = new IdService(useddb);
 const idController = new IdController(idService, Authentication.getIdFromToken);
 
 
-router.post('/register', registrationController.register);
 router.post('/getToken', auth.RefreshedToken);
 router.get('/getId', auth.authenticateToken, idController.getUserName);
-
-
-
+router.post('/register', registrationController.register);
+router.post('/login', loginController.login);
 
 router.get('/helloworld', helloWorldController.helloWorldController);
 
-router.post('/login', loginController.login);
-
 router.get('/heroes/:id', auth.authenticateToken, heroController.retrieveHeroesByUserId); //eslint-disable-line
-
 router.put('/hero', auth.authenticateToken, heroController.updateHeroById);
-
 router.get('/heroes', auth.authenticateToken,
 // heroController.getHeroes
 );
