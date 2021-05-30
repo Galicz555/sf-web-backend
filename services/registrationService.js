@@ -70,14 +70,13 @@ class RegistrationService {
         !this.checkIfPasswordNumLatinLetter(item.password)
       ) {
         reject(new Error(400));
-      } else if (item.password !== item.confirmPsw) {
-        reject(new Error(400));
       } else if (!userData.length) {
         resolve(this.insertUser(item));
       } else {
         reject(new Error(500));
       }
-    });
+    }).then((data) => {console.log(data)},
+    (reject) => {console.log(reject)});
   }
 }
 
